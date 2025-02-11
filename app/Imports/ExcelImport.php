@@ -15,12 +15,12 @@ class ExcelImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-        // Verificar si las cabeceras son correctas
+        // Verify if the headers are correct
         if (!$this->validateHeaders($rows)) {
             return;
         }
 
-        // Validar cada fila
+        // Validate each row
         foreach ($rows as $index => $row) {
             $validator = Validator::make($row->toArray(), [
                 'id' => 'required|integer',

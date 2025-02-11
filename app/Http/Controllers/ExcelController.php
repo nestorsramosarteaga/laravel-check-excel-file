@@ -23,18 +23,13 @@ class ExcelController extends Controller
         Excel::import($import, $request->file('excel_file'));
 
         if (!empty($import->errors)) {
-            //dd($import->errors);
             return back()->withErrors(['errors' => collect($import->errors)->flatten()->toArray()]);
         }
 
-        // Si no hay errores, guardar el archivo en storage
-        $path = $request->file('file')->store('files/checked');
+        // If there are no errors, store the file in storage
+        $path = $request->file('excel_file')->store('files/checked');
 
-        return response()->json([
-            'success' => true,
-            'message' => 'File uploaded and validated successfully.',
-            'path' => $path
-        ]);
+        return redirect()->back()->with('success', 'File uploaded and validated successfully.');
     }
 
 }
